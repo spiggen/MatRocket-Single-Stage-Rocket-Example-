@@ -2,12 +2,13 @@ function rocket = reference_rocket()
 
     rocket                  = csv2obj('.\Rocket_source\reference_rocket.csv');
     rocket.name             = "reference_rocket";
-    rocket.models           = {@equations_of_motion, ...
-                               @simple_tank_model, ...
-                               @propulsion_model,    ...
-                               @aerodynamics_model,  ...
-                               @gravity_model,       ...
-                               @equations_of_motion    };
+    rocket.models           = {@base_atmosphere_model,           ...
+                               @base_equations_of_motion_model,  ...
+                               @simple_tank_model,               ...
+                               @base_propulsion_model,           ...
+                               @base_aerodynamics_model,         ... 
+                               @base_gravity_model,              ...
+                               @base_equations_of_motion_model    };
 
 
 
@@ -18,13 +19,11 @@ function rocket = reference_rocket()
     %% Enviroment & physical constants
     
     rocket.enviroment                   = struct();
-    rocket.enviroment.position          = [0;0;1];
     rocket.enviroment.g                 = 9.81;
-    rocket.enviroment.temperature       = 282;
-    rocket.enviroment.wind_velocity     = [0;0;0];
-    
-    
-    [rocket.enviroment.temperature_COESA, ~, rocket.enviroment.pressure, ~] = atmoscoesa(0);
+
+    %% Atmosphere
+    rocket.atmosphere                   = struct();
+    rocket.atmosphere.wind_velocity     = [1;1;0];
     
     
     %% Rigid-body model
